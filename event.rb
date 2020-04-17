@@ -2,11 +2,8 @@
 
 require_relative "config/environment"
 
-DEFUALT_SOCKET_URL = "wss://stream.coindcx.com/socket.io/?transport=websocket"
-DEFUALT_MARKET_URL = "https://api.coindcx.com/exchange/v1/markets_details"
-
 def markets
-  url = ENV.fetch("MARKET_URL", DEFUALT_MARKET_URL)
+  url = ENV.fetch("MARKET_URL")
   text_resp = Net::HTTP.get(URI.parse(url))
   JSON.parse(text_resp).pluck("pair")
 end
@@ -25,7 +22,7 @@ end
 
 def em_run
   EM.run {
-    url = ENV.fetch("SOCKET_URL", DEFUALT_SOCKET_URL)
+    url = ENV.fetch("SOCKET_URL")
     ws = Faye::WebSocket::Client.new(url)
 
     ws.on :open do |_|
