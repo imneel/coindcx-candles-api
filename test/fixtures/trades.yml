@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  market: one
+  price: 9.99
+  quantity: 9.99
+  t: 
+  market: false
+
+two:
+  market: two
+  price: 9.99
+  quantity: 9.99
+  t: 
+  market: false
