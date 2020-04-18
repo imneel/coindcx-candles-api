@@ -50,6 +50,7 @@ class CandlesSearchService < ApplicationService
 
   def end_time
     return unless params["endTime"]
+
     out = params["endTime"]&.to_i
     out - (out % divider) + divider
   end
