@@ -27,3 +27,4 @@ end
 
 gem "awesome_print", "~> 1.8.0"
 gem "faye-websocket", "~> 0.10.9"
+gem "socket.io-client-simple", "~> 1.2.1"

@@ -25,7 +25,7 @@ def em_run
     url = ENV.fetch("SOCKET_URL")
     ws = Faye::WebSocket::Client.new(url)
 
-    ws.on :open do |_|
+    ws.on :open do
       Rails.logger.info("WS open!")
       markets.each {|pair| ws.send("42#{['join', {channelName: pair}].to_json}") }
     end

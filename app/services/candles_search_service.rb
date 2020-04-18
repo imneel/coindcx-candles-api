@@ -49,7 +49,9 @@ class CandlesSearchService < ApplicationService
   end
 
   def end_time
-    params["endTime"]&.to_i
+    return unless params["endTime"]
+    out = params["endTime"]&.to_i
+    out - (out % divider) + divider
   end
 
   def interval_unit
@@ -67,20 +69,20 @@ class CandlesSearchService < ApplicationService
   def query_resp
     output = Trade.where(market_id: market.id)
     output = output.where("traded_at >= ?", start_time) if start_time
-    output = output.where("traded_at <= ?", end_time) if end_time
+    output = output.where("traded_at < ?", end_time) if end_time
     output.order(Arel.sql("traded_at - MOD(traded_at, #{divider}) DESC"))
           .group(Arel.sql("traded_at - MOD(traded_at, #{divider})"))
           .pluck(
-            Arel.sql("traded_at - MOD(traded_at, #{divider})"),
-            Arel.sql("(ARRAY_AGG(price ORDER BY traded_at ASC))[1]"),
-            Arel.sql("MAX(price)"),
-            Arel.sql("MIN(price)"),
-            Arel.sql("(ARRAY_AGG(price ORDER BY traded_at DESC))[1]"),
-            Arel.sql("SUM(quantity)")
+            Arel.sql("((ARRAY_AGG(price ORDER BY traded_at ASC))[1])::FLOAT"),
+            Arel.sql("MAX(price)::FLOAT"),
+            Arel.sql("MIN(price)::FLOAT"),
+            Arel.sql("SUM(quantity)::FLOAT"),
+            Arel.sql("((ARRAY_AGG(price ORDER BY traded_at DESC))[1])::FLOAT"),
+            Arel.sql("traded_at - MOD(traded_at, #{divider})")
           )
   end
 
   def set_result
-    @result = query_resp.map {|row| %i[time open high low close volume].zip(row).to_h }
+    @result = query_resp.map {|row| %i[open high low volume close time].zip(row).to_h }
   end
 end
