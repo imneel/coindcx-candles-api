@@ -12,6 +12,7 @@ gem "pg", ">= 0.18", "< 2.0"
 gem "puma", "~> 4.1"
 gem "rails", "~> 6.0.2", ">= 6.0.2.2"
 gem "redis", "~> 4.1.3"
+gem "rollbar", "~> 2.24.0"
 gem "rubocop", "~> 0.82.0"
 gem "sidekiq", "~> 6.0.6"
 
