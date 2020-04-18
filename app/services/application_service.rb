@@ -16,7 +16,7 @@ class ApplicationService
   def merge_errors_from(object, prefix=nil)
     object.errors.messages.each do |key, errs|
       err_key = [prefix.presence, key.to_s].compact.join(".")
-      add_errors(err_key, errs)
+      errs.each {|err| errors.add(err_key, err) }
     end
     false
   end

@@ -2,14 +2,14 @@
 
 one:
   market: one
-  price: 9.99
-  quantity: 9.99
-  t: 
-  market: false
+  price: 0.99
+  quantity: 1.99
+  traded_at: 1587184860000
+  market_maker: false
 
 two:
   market: two
-  price: 9.99
-  quantity: 9.99
-  t: 
-  market: false
+  price: 2.99
+  quantity: 3.99
+  traded_at: 1587184860000
+  market_maker: false
