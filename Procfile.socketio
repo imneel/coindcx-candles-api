@@ -1,2 +1,0 @@
-worker:  bundle exec sidekiq
-event:   bundle exec ruby socketio.rb
